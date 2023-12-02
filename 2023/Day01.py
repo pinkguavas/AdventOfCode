@@ -6,10 +6,10 @@ part1 = 0
 for line in file:
     numbers = []
     for i in line:
-        if i.isdigit() == True:
+        if i.isdigit():
             numbers.append(i)
-    sum = numbers[0] + numbers[len(numbers)-1]
-    part1 += int(sum)
+    value = numbers[0] + numbers[len(numbers)-1]
+    part1 += int(value)
 file.close()
 
 #Part 2
@@ -27,10 +27,10 @@ for line in file:
     line = re.sub("eight", "e8t", line)
     line = re.sub("nine", "n9e", line)
     for i in line:
-        if i.isdigit() == True:
+        if i.isdigit():
             numbers.append(i)
-    sum = numbers[0] + numbers[len(numbers)-1]
-    part2 += int(sum)
+    value = numbers[0] + numbers[len(numbers)-1]
+    part2 += int(value)
 file.close()
 
 print(part1)
