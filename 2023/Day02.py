@@ -1,12 +1,17 @@
-# Part 1
 file = open("path", "r+")
-sumOfId = 0
+part1 = 0
+part2 = 0
 for line in file:
     addOrNot = 0
     line = line.rstrip("\n")
     gameElement = line.split(":")
-    splitGameElement = gameElement[0].split()
-    gameId = int(splitGameElement[1])
+    splitGameElement = gameElement[0].split()  # Part 1 - split game word and game id into list
+    gameId = int(splitGameElement[1])  # Part 1 - second element is game id
+    maxCubes = {  # Part 2 - minimum number of colors needed for every subset to be possible
+        "red": 0,
+        "green": 0,
+        "blue": 0
+    }
     for part in line.split(";"):  # splits the line into subsets of one game
         part = part + "."
         cubes = {
@@ -25,45 +30,15 @@ for line in file:
                     value += num
                     cubes[key] = value
             x += 1
-        if cubes.get("red") > 12 or cubes.get("green") > 13 or cubes.get("blue") > 14:  # checks criteria
+        if cubes.get("red") > 12 or cubes.get("green") > 13 or cubes.get("blue") > 14:  # Part 1 - checks criteria
             addOrNot += 1
-    if addOrNot == 0:  # validates that all subsets were possible
-        sumOfId += gameId
-print(sumOfId)
-file.close()
-
-# Part 2
-file = open("path", "r+")
-sumOfSets = 0
-for line in file:
-    line = line.rstrip("\n")
-    maxCubes = {  # minimum number of colors needed for every subset to be possible
-        "red": 0,
-        "green": 0,
-        "blue": 0
-    }
-    for part in line.split(";"):  # checks for color and number of cubes like in Part 1
-        cubes = {  # number of colors for each subset
-            "red": 0,
-            "green": 0,
-            "blue": 0
-        }
-        part = part + "."
-        chunks = part.split()
-        x = 0
-        for word in chunks:
-            word = word.rstrip(word[-1])
-            for key, value in cubes.items():
-                num = 0
-                if key == word:
-                    num = int(chunks[x - 1])
-                    value += num
-                    cubes[key] = value
-            x += 1
-        for key, value in cubes.items():
-            if value > maxCubes.get(key):  # if value of current subset key is greater than previous values, replace
+        for key, value in cubes.items():  # Part 2 - if value of current subset is greater than previous values, replace
+            if value > maxCubes.get(key):
                 maxCubes[key] = value
-    powerOfSet = maxCubes.get("red") * maxCubes.get("blue") * maxCubes.get("green")
-    sumOfSets += powerOfSet
-print(sumOfSets)
+    if addOrNot == 0:  # Part 1 - validates that all subsets were possible
+        part1 += gameId
+    powerOfSet = maxCubes.get("red") * maxCubes.get("blue") * maxCubes.get("green")  # Part 2 - calculate the power
+    part2 += powerOfSet
+print(part1)
+print(part2)
 file.close()
